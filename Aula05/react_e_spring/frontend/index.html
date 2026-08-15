@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Alunos (React + Spring)</title>
+
+    <!-- Bibliotecas do React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: white; padding: 20px; margin: 15px 0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid #28a745; }
+        .card h3 { margin: 0 0 10px 0; color: #343a40; }
+        .card p { margin: 0; color: #6c757d; }
+        h1 { color: #007bff; text-align: center; }
+        .loading { text-align: center; font-style: italic; color: #6c757d; }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+        // 1. Definição dos Estados
+        const [alunos, setAlunos] = useState([]);
+        const [loading, setLoading] = useState(true);
+
+        // 2. useEffect: Realiza a chamada HTTP para o Spring Boot
+        useEffect(() => {
+            // Acessando a API no localhost
+            fetch('http://localhost:8080/api/alunos')
+                .then(response => response.json())
+                .then(data => {
+                    setAlunos(data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.error("Erro na comunicação com a API:", error);
+                    setLoading(false);
+                });
+        }, []); // O array vazio garante que rode apenas uma vez (quando a tela abre)
+
+        return (
+            <div className="container">
+                <h1>🎓 Sistema de Gestão de Alunos</h1>
+
+                {loading ? (
+                    <p className="loading">Conectando ao servidor Spring Boot...</p>
+                ) : (
+                    <div>
+                        {alunos.length === 0 ? (
+                            <p className="loading">Nenhum aluno encontrado.</p>
+                        ) : (
+                            alunos.map(aluno => (
+                                <div key={aluno.id} className="card">
+                                    <h3>{aluno.nome}</h3>
+                                    <p><strong>Curso:</strong> {aluno.curso}</p>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Alunos (React + Spring)</title>
+
+    <!-- Bibliotecas do React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: white; padding: 20px; margin: 15px 0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid #28a745; }
+        .card h3 { margin: 0 0 10px 0; color: #343a40; }
+        .card p { margin: 0; color: #6c757d; }
+        h1 { color: #007bff; text-align: center; }
+        .loading { text-align: center; font-style: italic; color: #6c757d; }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+        // 1. Definição dos Estados
+        const [alunos, setAlunos] = useState([]);
+        const [loading, setLoading] = useState(true);
+
+        // 2. useEffect: Realiza a chamada HTTP para o Spring Boot
+        useEffect(() => {
+            // Acessando a API no localhost
+            fetch('http://localhost:8080/api/alunos')
+                .then(response => response.json())
+                .then(data => {
+                    setAlunos(data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.error("Erro na comunicação com a API:", error);
+                    setLoading(false);
+                });
+        }, []); // O array vazio garante que rode apenas uma vez (quando a tela abre)
+
+        return (
+            <div className="container">
+                <h1>🎓 Sistema de Gestão de Alunos</h1>
+
+                {loading ? (
+                    <p className="loading">Conectando ao servidor Spring Boot...</p>
+                ) : (
+                    <div>
+                        {alunos.length === 0 ? (
+                            <p className="loading">Nenhum aluno encontrado.</p>
+                        ) : (
+                            alunos.map(aluno => (
+                                <div key={aluno.id} className="card">
+                                    <h3>{aluno.nome}</h3>
+                                    <p><strong>Curso:</strong> {aluno.curso}</p>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+</script>
+</body>
+</html>
